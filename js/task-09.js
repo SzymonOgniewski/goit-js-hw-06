@@ -16,7 +16,7 @@ function getRandomHexColor() {
     .toString(16)
     .padStart(6, 0)}`;
 }
-
+color.textContent = "#FFFFFF";
 button.addEventListener("click", () => {
   body.style.backgroundColor = `${getRandomHexColor()}`;
   color.textContent = `${getRandomHexColor()}`;

@@ -1,25 +1,35 @@
 function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+  return `#${Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, 0)}`;
 }
 const boxes = document.querySelector("#boxes");
-const controls = document.querySelector("#controls");
-const inputTextarea = controls.firstElementChild;
+const inputTextarea = document.querySelector("input");
 const createBtn = document.querySelector("[data-create]");
 const destroyBtn = document.querySelector("[data-destroy]");
-let amount;
-function createBoxes(amount) {
-  for (let i = 1; i <= 100 && i <= amount; i++) {
-    boxes.append(document.createElement("div"));
+
+const createBoxes = () => {
+  const amount = inputTextarea.value;
+  console.log(amount);
+  if (amount >= 1 && amount <= 100) {
+    let boxAmount = 0;
+    while (boxAmount < amount) {
+      const boxesToCreate = document.createElement("div");
+      boxesToCreate.style.backgroundColor = `${getRandomHexColor()}`;
+      boxesToCreate.style.width = `${30 + boxAmount * 10}px`;
+      boxesToCreate.style.height = `${30 + boxAmount * 10}px`;
+      boxes.append(boxesToCreate);
+      boxAmount += 1;
+      console.log(boxAmount);
+    }
+  } else {
+    return alert(
+      "Unable to create boxes, we can only create minimum 1 box and maximum 100 boxes"
+    );
   }
-}
+};
+createBtn.addEventListener("click", createBoxes);
 
-createBtn.addEventListener(
-  "click",
-  createBoxes(
-    (amount = inputTextarea.addEventListener("input", () => {
-      console.log(event.currentTarget.value);
-    }))
-  )
-);
-
-// psycha sitting
+destroyBtn.addEventListener("click", () => {
+  boxes.innerHTML = "";
+});
